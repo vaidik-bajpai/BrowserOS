@@ -63,6 +63,12 @@ index 0000000000000..c191fb3963968
 +}
 +
 +void SyncDefaultTheme(PrefService* pref_service) {
++  // BrowserOS: If the user is using a system theme (GTK on Linux), do not
++  // overwrite it with the default BrowserOS value.
++  if (pref_service->GetBoolean(::prefs::kUsesSystemTheme)) {
++    return;
++  }
++
 +  const PrefService::Preference* user_color_pref =
 +      pref_service->FindPreference(::prefs::kUserColor);
 +  if (user_color_pref && user_color_pref->IsDefaultValue()) {
